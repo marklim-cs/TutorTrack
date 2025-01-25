@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 class Categories(models.Model):
-    name = models.CharField(primary_key=True, max_length=250, null=False, unique=True)
+    name = models.CharField(max_length=250, null=False, unique=True)
 
 class Books(models.Model):
     provided_id = models.CharField(max_length=100)
