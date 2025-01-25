@@ -1,10 +1,21 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import login
+from .forms import UserRegistration
 
 # Create your views here.
-def signup(request):
-    raise NotImplementedError("TO DO")
+def sign_up(request):
+    if request.method == "POST":
+        registration_form = UserRegistration(request.POST)
+        if registration_form.is_valid():
+            user = registration_form.save()
+            login(request, user)
+            return redirect("/home")
+    else:
+        registration_form = UserRegistration()
 
-def login(request):
+    return render(request, 'sign_up.html', {'registration_form': registration_form})
+
+def log_in(request):
     raise NotImplementedError("TO DO")
 
 def logout(request):
