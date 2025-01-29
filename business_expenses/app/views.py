@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib import messages
 from .forms import UserRegistration
 
 # Create your views here.
@@ -30,8 +31,10 @@ def log_in(request):
     return render(request, "log_in.html", {"login_form": login_form})
 
 
-def logout(request):
-    raise NotImplementedError("TO DO")
+def log_out(request):
+    logout(request)
+    messages.success(request, "You've successfully logged out. We hope to see you soon!")
+    return render(request, "log_out.html")
 
 def home(request):
     return render(request, 'home.html')
@@ -46,4 +49,10 @@ def year_to_date_summary(request):
     raise NotImplementedError("TO DO")
 
 def yearly_summary(request):
+    raise NotImplementedError("TO DO")
+
+def update_category(request):
+    raise NotImplementedError("TO DO")
+
+def update_book(request):
     raise NotImplementedError("TO DO")
