@@ -16,8 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from . import views
 
 urlpatterns = [
     path('', include(('app.urls', "app"), namespace="app")),
     path('admin/', admin.site.urls),
 ]
+
+handler404 = 'tutor_track.views.handler404'
