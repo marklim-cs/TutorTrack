@@ -2,9 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
-from .forms import UserRegistration
+from app.forms import UserRegistration
 
-# Create your views here.
 def signup(request):
     if request.method == "POST":
         registration_form = UserRegistration(request.POST)
@@ -38,21 +37,3 @@ def log_out(request):
 
 def home(request):
     return render(request, 'home.html')
-
-def daily_summary(request):
-    raise NotImplementedError("TO DO")
-
-def monthly_summary(reqest):
-    raise NotImplementedError("TO DO")
-
-def year_to_date_summary(request):
-    raise NotImplementedError("TO DO")
-
-def yearly_summary(request):
-    raise NotImplementedError("TO DO")
-
-def update_category(request):
-    raise NotImplementedError("TO DO")
-
-def update_book(request):
-    raise NotImplementedError("TO DO")
