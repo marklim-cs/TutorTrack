@@ -1,13 +1,20 @@
 from django.contrib import admin
-from .models import Category, Book
+from .models import Student, Language, Rate, Lesson
 
 # Register your models here.
-class CategoryAdmin(admin.ModelAdmin):
+class StudentAdmin(admin.ModelAdmin):
+    list_display = ("id", "first_name", "last_name")
+
+class LanguageAdmin(admin.ModelAdmin):
     list_display = ("id", "name")
 
-class BookAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "authors", "publisher",
-                    "published_date", "distribution_expense", "category_id")
+class RateAdmin(admin.ModelAdmin):
+    list_display = ("id", "student", "rate", "language", "tutor")
 
-admin.site.register(Category, CategoryAdmin)
-admin.site.register(Book, BookAdmin)
+class LessonAdmin(admin.ModelAdmin):
+    list_display = ("id", "rate", "date", "time")
+
+admin.site.register(Student, StudentAdmin)
+admin.site.register(Language, LanguageAdmin)
+admin.site.register(Rate, RateAdmin)
+admin.site.register(Lesson, LessonAdmin)

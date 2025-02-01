@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block body %}
+    <dev class="container ms-4">
+        <h1>Hello and welcome!</h1>
+        <p>Log in if you already have a TutorTrack account</p>
+        <form  method="get" action="{% url 'app:log_in' %}">
+            <button type="submit" class="btn btn-success">Log in</button>
+        </form>
+        <p>or Sign up if you are new to our platform</p>
+            <form method="get" action="{% url 'app:signup' %}">
+                <button type="submit" class="btn btn-success">Sign up</button>
+            </form>
+    </dev>
+{% endblock %}

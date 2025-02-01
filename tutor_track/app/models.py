@@ -1,19 +1,25 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
-class Category(models.Model):
-    name = models.CharField(max_length=250, null=False, unique=True)
+class Student(models.Model):
+    first_name = models.CharField(max_length=250, null=False)
+    last_name = models.CharField(max_length=250, null=True)
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.first_name}"
 
-class Book(models.Model):
-    provided_id = models.CharField(max_length=100)
-    title = models.CharField(max_length=500, null=False)
-    subtitle = models.CharField(max_length=500, null=True, blank=True)
-    authors = models.CharField(max_length=500, null=False)
-    publisher = models.CharField(max_length=500, null=False)
-    published_date = models.DateField()
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    distribution_expense = models.DecimalField(max_digits=20, decimal_places=2, null=False)
+class Language(models.Model):
+    name = models.CharField(max_length=250, blank=False)
+
+class Rate(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    rate = models.IntegerField(blank=False)
+    language = models.ForeignKey(Language, on_delete=models.CASCADE)
+    tutor = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class Lesson(models.Model):
+    rate = models.ForeignKey(Rate, on_delete=models.CASCADE)
+    date = models.DateField(auto_now=True)
+    time = models.TimeField(auto_now=True)

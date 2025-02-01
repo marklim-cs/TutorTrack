@@ -4,6 +4,12 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from app.forms import UserRegistration
 
+def index(request):
+    if request.user.is_authenticated:
+        return redirect("home")
+    else:
+        return render(request, "index.html")
+
 def signup(request):
     if request.method == "POST":
         registration_form = UserRegistration(request.POST)
@@ -23,7 +29,7 @@ def log_in(request):
         if login_form.is_valid():
             user = login_form.get_user()
             login(request, user)
-            return redirect("/home")
+            return redirect("home")
     else:
         login_form = AuthenticationForm()
 
