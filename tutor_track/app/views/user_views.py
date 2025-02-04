@@ -6,7 +6,7 @@ from app.forms import UserRegistration
 
 def index(request):
     if request.user.is_authenticated:
-        return redirect("home")
+        return redirect("/home")
     else:
         return render(request, "index.html")
 
@@ -29,7 +29,7 @@ def log_in(request):
         if login_form.is_valid():
             user = login_form.get_user()
             login(request, user)
-            return redirect("home")
+            return redirect("/home")
     else:
         login_form = AuthenticationForm()
 

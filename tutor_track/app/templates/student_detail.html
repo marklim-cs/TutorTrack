@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <div class="container">
+        <h1>Student Details</h1>
+        <div class="row">
+            <div class="col-sm-3" style="background-color: lightpink;">
+                    <p><strong>Student:</strong> {{ student.first_name }} {{ student.last_name }}</p>
+
+                    <p><strong>Lessons</strong></p>
+                    {% for lesson in lessons %}
+                    <ul>
+                        <li><strong>Rate: </strong>{{lesson.rate}}</li>
+                        <li><strong>Language: </strong> {{lesson.language}}</li>
+                    </ul>
+                    {% empty %}
+                        No lessons assigned.
+                    {% endfor %}
+
+                    <p><strong>Days</strong></p>
+                    <ul>
+                        {% for day in days %}
+                                <li>{{ day }}</li>  
+                        {% empty%}
+                            No days assigned.
+                        {% endfor %}
+                    </ul>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
