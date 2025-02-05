@@ -22,7 +22,7 @@ class Day(models.Model):
     def __str__(self):
         return f"{self.day}"
 
-class Lesson(models.Model):
+class StudentCard(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     rate = models.IntegerField(blank=True, null=True)
     day = models.ManyToManyField(Day)
@@ -32,7 +32,7 @@ class Lesson(models.Model):
         return f"{self.student}, {self.rate}, {self.day}, {self.language}"
 
 class MonthlyRecord(models.Model):
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+    lesson = models.ForeignKey(StudentCard, on_delete=models.CASCADE)
     count = models.IntegerField(blank=False)
     total_money = models.IntegerField(blank=True, null=True)
 

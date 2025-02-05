@@ -1,7 +1,11 @@
 {% extends "layout.html" %}
 {% block body %}
     <h1>Hi, Tutor!</h1>
-    <form method="get" action="{% url 'app:log_out' %}">
+    <form method="get" action="{% url 'app:log_out' %}" style="padding-left: 20px;">
         <button type="submit">Log out</button>
+    </form>
+    <br>
+    <form method="get" action="{% url 'app:students' %}" style="padding-left: 20px;">
+        <button type="submit">Students</button>
     </form>
 {% endblock %}

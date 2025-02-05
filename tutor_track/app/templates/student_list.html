@@ -7,7 +7,7 @@
             <div class="col-sm-3" style="background-color: lightpink;">
                 <ol>
                     {% for student in students %}
-                    <a href="{% url 'app:student_detail' student.id %}">
+                    <a href="{% url 'app:student_card' student.id %}">
                         <li>{{ student }}</li>
                     </a>
                     {% endfor %}
