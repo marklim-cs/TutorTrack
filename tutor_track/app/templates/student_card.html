@@ -7,27 +7,26 @@
             <div class="col-sm-3" style="background-color: lightpink;">
                     <p><strong>Student:</strong> {{ student.first_name }} {{ student.last_name }}</p>
 
-                    <p><strong>Lessons</strong></p>
-                    {% for lesson in lessons %}
+                {% for entry in card_data %}
+                    <p><strong>Lesson</strong></p>
                     <ul>
-                        <li><strong>Rate: </strong>{{lesson.rate}}</li>
-                        <li><strong>Language: </strong> {{lesson.language}}</li>
+                        <li><strong>Rate: </strong>{{entry.lesson.rate}}</li>
+                        <li><strong>Language: </strong> {{entry.lesson.language}}</li>
+                        <li><strong>Days: </strong> 
+                            <ul>
+                                {% for day in entry.days %}
+                                <li>{{ day }}</li>
+                                {% empty %}
+                                    No lessons assigned.
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        <li><strong>ID: </strong>{{entry.lesson.id}}</li>
+                        <form method="get" action="{% url 'app:edit_student_card' student.id entry.lesson.id %}" style="padding: 20px;">
+                            <button type="submit">Edit</button>
+                        </form>
                     </ul>
-                    {% empty %}
-                        No lessons assigned.
-                    {% endfor %}
-
-                    <p><strong>Days</strong></p>
-                    <ul>
-                        {% for day in days %}
-                                <li>{{ day }}</li>  
-                        {% empty%}
-                            No days assigned.
-                        {% endfor %}
-                    </ul>
-                    <form method="get" action="{% url 'app:edit_student_card' student.id %}" style="padding-bottom: 20px;">
-                        <button type="submit">Edit</button>
-                    </form>
+                {% endfor %}
             </div>
         </div>
     </div>

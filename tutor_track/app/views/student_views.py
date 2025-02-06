@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from app.models import Student, StudentCard
 from app.forms import UpdateStudentForm, UpdateStudentCardForm
+from django.shortcuts import get_object_or_404
 
 class StudentList(View):
     def get(self, request):
@@ -11,22 +12,23 @@ class StudentList(View):
 
 class StudentCardView(View):
     def get(self, request, student_id):
-        lessons = StudentCard.objects.filter(student_id=student_id)
+        student_cards = StudentCard.objects.filter(student_id=student_id)
         student = Student.objects.get(id=student_id)
 
-        days = []
-        for lesson in lessons:
-            day_query = list(lesson.day.all().values())
-            days.extend([entry["day"] for entry in day_query])
+        card_data = []
+        for card in student_cards:
+            days = [day.name for day in card.day.all()]
+            card_data.append({"lesson": card, "days": days})
+
         context = {"student": student,
-                   "days": days,
-                   "lessons": lessons}
+                   "card_data": card_data}
+
         return render(request, "student_card.html", context)
 
 class UpdateStudentCard(View):
-    def get(self, request, student_id):
-        student = Student.objects.get(id=student_id)
-        student_card = StudentCard.objects.get(student_id=student_id)
+    def get(self, request, student_id, student_card_id):
+        student = get_object_or_404(Student, id=student_id)
+        student_card = get_object_or_404(StudentCard, student_id=student_id, id=student_card_id)
 
         student_form = UpdateStudentForm(instance=student)
         card_form = UpdateStudentCardForm(instance=student_card)
@@ -35,13 +37,15 @@ class UpdateStudentCard(View):
                     "student_form": student_form,
                     "card_form": card_form,
                     "student": student,
+                    "student_card": student_card,
             }
 
         return render(request, "edit_student_card.html", context)
 
-    def post(self, request, student_id):
-        student = Student.objects.get(id=student_id)
-        student_card = StudentCard.objects.get(student_id=student_id)
+    def post(self, request, student_id, student_card_id):
+        student = get_object_or_404(Student, id=student_id)
+        student_card = get_object_or_404(StudentCard, student__id=student_id, id=student_card_id)
+        print("student_card.id", student_card.id)
 
         student_form = UpdateStudentForm(request.POST, instance=student)
         card_form = UpdateStudentCardForm(request.POST, instance=student_card)

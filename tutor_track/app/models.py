@@ -17,10 +17,10 @@ class Language(models.Model):
         return f"{self.name}"
 
 class Day(models.Model):
-    day = models.CharField(max_length=250, blank=True, null=True)
+    name = models.CharField(max_length=250)
 
     def __str__(self):
-        return f"{self.day}"
+        return f"{self.name}"
 
 class StudentCard(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)

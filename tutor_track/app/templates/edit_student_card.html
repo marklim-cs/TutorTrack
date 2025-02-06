@@ -3,14 +3,16 @@
 {% block body %}
     <div class="container">
         <h1>Edit Student Card</h1>
+        <div class="col-sm-3" style="background-color: turquoise; padding: 20px;">
         <p><strong>{% if student %} {{ student.first_name}} {{ student.last_name}} {% endif %}</strong></p>
-        <div class="row">
-            <form method="post" action="{% url 'app:edit_student_card' student.id %}">
-                {% csrf_token %}
-                {{ student_form.as_p }}
-                {{ card_form.as_p}}
-                <button type="submit">Save</button>
-            </form>
+            <div class="row">
+                    <form method="post" action="{% url 'app:edit_student_card' student.id student_card.id %}">
+                        {% csrf_token %}
+                        {{ student_form.as_p }}
+                        {{ card_form.as_p}}
+                        <button type="submit">Save</button>
+                    </form>
+            </div>
         </div>
     </div>
 
