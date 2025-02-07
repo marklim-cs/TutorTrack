@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.timezone import now
 from django.contrib.auth.models import User
 
 # Create your models here.
@@ -31,10 +32,11 @@ class StudentCard(models.Model):
     def __str__(self):
         return f"{self.student}, {self.rate}, {self.day}, {self.language}"
 
-class MonthlyRecord(models.Model):
+class MonthlySummary(models.Model):
     lesson = models.ForeignKey(StudentCard, on_delete=models.CASCADE)
     count = models.IntegerField(blank=False)
     total_money = models.IntegerField(blank=True, null=True)
+    date = models.DateField(default=now)
 
     def __str__(self):
         return f"{self.lesson}, {self.count}, {self.total_money}"

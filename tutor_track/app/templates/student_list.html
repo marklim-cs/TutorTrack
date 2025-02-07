@@ -13,6 +13,9 @@
                     </a>
                     {% endfor %}
                 </ol>
+                <form method="get" action="{% url 'app:monthly_summary' %}">
+                    <button type="submit">Create monthly summary</button>
+                </form>
             </div>
         </div>
     </div>

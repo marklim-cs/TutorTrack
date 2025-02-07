@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Student, Language, StudentCard, MonthlyRecord, Day
+from .models import Student, Language, StudentCard, MonthlySummary, Day
 
 # Register your models here.
 class StudentAdmin(admin.ModelAdmin):
@@ -15,8 +15,8 @@ class StudentCardAdmin(admin.ModelAdmin):
 
     list_display = ("id", "student", "get_days", "rate", "language", "tutor")
 
-class MonthlyRecordAdmin(admin.ModelAdmin):
-    list_display = ("id", "lesson", "count", "total_money")
+class MonthlySummaryAdmin(admin.ModelAdmin):
+    list_display = ("id", "lesson", "count", "total_money", "date")
 
 class DayAdmin(admin.ModelAdmin):
     list_display = ("id", "name")
@@ -24,5 +24,5 @@ class DayAdmin(admin.ModelAdmin):
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Language, LanguageAdmin)
 admin.site.register(StudentCard, StudentCardAdmin)
-admin.site.register(MonthlyRecord, MonthlyRecordAdmin)
+admin.site.register(MonthlySummary, MonthlySummaryAdmin)
 admin.site.register(Day, DayAdmin)
