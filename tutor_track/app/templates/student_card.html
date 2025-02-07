@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 
 {% block body %}
-    <div class="container">
+{% include "header.html" %}
+    <div class="container-fluid">
         <h1>Student Card</h1>
-        <div class="row">
-            <div class="col-sm-3" style="background-color: lightpink;">
-                    <p><strong>Student:</strong> {{ student.first_name }} {{ student.last_name }}</p>
-
+        <div class="row-cols-auto">
+            <div class="col-sm-3" style="background-color: lightpink; padding: 20px;">
+                 <p><strong>Student:</strong> {{ student.first_name }} {{ student.last_name }}</p>
                 {% for entry in card_data %}
                     <p><strong>Lesson</strong></p>
                     <ul>
@@ -22,9 +22,14 @@
                             </ul>
                         </li>
                         <li><strong>ID: </strong>{{entry.lesson.id}}</li>
-                        <form method="get" action="{% url 'app:edit_student_card' student.id entry.lesson.id %}" style="padding: 20px;">
-                            <button type="submit">Edit</button>
-                        </form>
+                        <div style="display: flex; gap: 10px; padding: 20px;">
+                            <form method="get" action="{% url 'app:edit_student_card' student.id entry.lesson.id %}" style="padding: 20px;">
+                                <button type="submit">Edit</button>
+                            </form>
+                            <form method="get" action="{% url 'app:monthly_summary' student.id entry.lesson.id %}" style="padding: 20px;">
+                                <button type="submit">Create summary</button>
+                            </form>
+                        </div>
                     </ul>
                 {% endfor %}
             </div>

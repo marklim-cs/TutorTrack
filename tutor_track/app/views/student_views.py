@@ -1,8 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from app.models import Student, StudentCard
 from app.forms import UpdateStudentForm, UpdateStudentCardForm
-from django.shortcuts import get_object_or_404
 
 class StudentList(View):
     def get(self, request):

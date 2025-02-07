@@ -1,11 +1,11 @@
 {% extends "layout.html" %}
 
 {% block body %}
-    <div class="container">
+    <div class="container-fluid">
         <h1>Edit Student Card</h1>
-        <div class="col-sm-3" style="background-color: turquoise; padding: 20px;">
-        <p><strong>{% if student %} {{ student.first_name}} {{ student.last_name}} {% endif %}</strong></p>
-            <div class="row">
+        <div class="row-cols-auto">
+            <div class="col-sm-3" style="background-color: turquoise; padding: 20px;">
+                <p><strong>{% if student %} {{ student.first_name}} {{ student.last_name}} {% endif %}</strong></p>
                     <form method="post" action="{% url 'app:edit_student_card' student.id student_card.id %}">
                         {% csrf_token %}
                         {{ student_form.as_p }}

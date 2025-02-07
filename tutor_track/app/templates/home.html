@@ -1,11 +1,26 @@
 {% extends "layout.html" %}
 {% block body %}
-    <h1>Hi, Tutor!</h1>
-    <form method="get" action="{% url 'app:log_out' %}" style="padding-left: 20px;">
-        <button type="submit">Log out</button>
-    </form>
-    <br>
-    <form method="get" action="{% url 'app:students' %}" style="padding-left: 20px;">
-        <button type="submit">Students</button>
-    </form>
+    <div class="container-fluid" style="padding: 10px">
+        <h1>Hi, Tutor!</h1>
+        <div class="row-cols-auto">
+            <div class="col-sm-3" style="background-color: turquoise; padding: 20px;">
+                <p><strong>Lesoons planned: </strong></p>
+                <p><strong>Active students: </strong></p>
+                <p><strong>Monthly income: </strong></p>
+            </div>
+                <div style="display: flex; gap: 10px; padding: 10px;">
+                    <form method="get" action="{% url 'app:log_out' %}">
+                        <button type="submit">Log out</button>
+                    </form>
+
+                    <form method="get" action="{% url 'app:students' %}" style="padding-left: 20px;">
+                        <button type="submit">Students</button>
+                    </form>
+
+                    <form style="padding-left: 20px;">
+                        <button type="submit">Monthly Summary</button>
+                    </form>
+                </div>
+        </div>
+    </div>
 {% endblock %}

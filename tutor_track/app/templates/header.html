@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block body %}
+<header>
+    <div style="display: flex; gap: 10px; padding: 20px;">
+        <form method="post" action="{% url 'app:log_out' %}">
+            {% csrf_token %}
+            <button type="submit">Log out</button>
+        </form>
+        <form method="get" action="{% url 'app:home' %}">
+            <button type="submit">Home</button>
+        </form>
+    </div>
+</header>
+{% endblock %}

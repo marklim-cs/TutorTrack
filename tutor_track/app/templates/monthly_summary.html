@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <div class="container">
+        <h1>Monthly Payments</h1>
+        <div class="col-auto" style="background-color: turquoise; padding: 20px;">
+            <div class="row">
+                    {% if monthly_form %}
+                        {{ monthly_form.as_p }}
+                    {% else %}
+                        No records registered.
+                    {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

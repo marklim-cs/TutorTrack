@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from app.models import Student, StudentCard, Language, Day
+from app.models import Student, StudentCard, Language, Day, MonthlyRecord
 
 class UserRegistration(UserCreationForm):
     first_name = forms.CharField(required=True)
@@ -25,3 +25,8 @@ class UpdateStudentCardForm(ModelForm):
     class Meta:
         model = StudentCard
         fields = ['rate', 'day', 'language']
+
+class MonthlyPaymentForm(ModelForm):
+    class Meta:
+        model = MonthlyRecord
+        fields = '__all__'

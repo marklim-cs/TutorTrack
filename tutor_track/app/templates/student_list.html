@@ -1,10 +1,11 @@
 {% extends "layout.html" %}
 
 {% block body %}
-    <div class="container">
+{% include "header.html" %}
+    <div class="container-fluid">
         <h1>Student List</h1>
-        <div class="row">
-            <div class="col-sm-3" style="background-color: lightpink;">
+        <div class="row-cols-auto" style="padding: 10px;">
+            <div class="col-sm-3" style="background-color: lightpink; padding: 10px;">
                 <ol>
                     {% for student in students %}
                     <a href="{% url 'app:student_card' student.id %}">
