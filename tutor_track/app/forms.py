@@ -1,5 +1,6 @@
 from django import forms
 from django.forms import ModelForm
+from django.forms.widgets import NumberInput
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from app.models import Student, StudentCard, Language, Day, MonthlySummary
@@ -27,6 +28,7 @@ class UpdateStudentCardForm(ModelForm):
         fields = ['rate', 'day', 'language']
 
 class MonthlyPaymentForm(ModelForm):
+    date = forms.DateField(widget=NumberInput(attrs={"type":"date"}))
     class Meta:
         model = MonthlySummary
-        fields = ['lesson', 'count', 'total_money', 'date']
+        fields = ['student_card', 'lesson_count', 'date']

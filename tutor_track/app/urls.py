@@ -19,8 +19,9 @@ urlpatterns = [
         name='edit_student_card'
         ),
     path(
-        "summary/",
+        "monthly_summary/",
         budget_views.MonthlyPaymentSummary.as_view(),
         name='monthly_summary'
         ),
+    path("delete_summary", budget_views.DeleteSummary.as_view(), name="delete_summary")
     ]

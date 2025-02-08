@@ -16,7 +16,7 @@ class StudentCardAdmin(admin.ModelAdmin):
     list_display = ("id", "student", "get_days", "rate", "language", "tutor")
 
 class MonthlySummaryAdmin(admin.ModelAdmin):
-    list_display = ("id", "lesson", "count", "total_money", "date")
+    list_display = ("id", "student_card", "lesson_count", "date")
 
 class DayAdmin(admin.ModelAdmin):
     list_display = ("id", "name")

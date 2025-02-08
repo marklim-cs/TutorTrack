@@ -44,7 +44,6 @@ class UpdateStudentCard(View):
     def post(self, request, student_id, student_card_id):
         student = get_object_or_404(Student, id=student_id)
         student_card = get_object_or_404(StudentCard, student__id=student_id, id=student_card_id)
-        print("student_card.id", student_card.id)
 
         student_form = UpdateStudentForm(request.POST, instance=student)
         card_form = UpdateStudentCardForm(request.POST, instance=student_card)
