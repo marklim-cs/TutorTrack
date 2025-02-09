@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from app.models import Student, StudentCard
-from app.forms import UpdateStudentForm, UpdateStudentCardForm
+from app.forms import UpdateStudentForm, UpdateCardForm, CreateCardForm
 
 class StudentList(View):
     def get(self, request):
@@ -32,7 +32,7 @@ class UpdateStudentCard(View):
         student_card = get_object_or_404(StudentCard, student_id=student_id, id=student_card_id)
 
         student_form = UpdateStudentForm(instance=student)
-        card_form = UpdateStudentCardForm(instance=student_card)
+        card_form = UpdateCardForm(instance=student_card)
 
         context = {
                     "student_form": student_form,
@@ -48,7 +48,7 @@ class UpdateStudentCard(View):
         student_card = get_object_or_404(StudentCard, student__id=student_id, id=student_card_id)
 
         student_form = UpdateStudentForm(request.POST, instance=student)
-        card_form = UpdateStudentCardForm(request.POST, instance=student_card)
+        card_form = UpdateCardForm(request.POST, instance=student_card)
 
         if student_form.is_valid() and card_form.is_valid():
             student_form.save()
@@ -62,3 +62,18 @@ class UpdateStudentCard(View):
                     "student": student,
             }
             return render(request, "edit_student_card", context)
+
+class CreateStudent(View):
+    def get(self, request):
+        create_student_form = UpdateStudentForm()
+        create_card_form = CreateCardForm()
+
+        context = {
+            "create_student_form": create_student_form,
+            "create_card_form": create_card_form,
+        }
+
+        return render(request, "add_student.html", context)
+
+    def post(self,request):
+        pass

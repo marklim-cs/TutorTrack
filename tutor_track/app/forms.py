@@ -19,7 +19,7 @@ class UpdateStudentForm(ModelForm):
         model = Student
         fields = ['first_name', 'last_name']
 
-class UpdateStudentCardForm(ModelForm):
+class UpdateCardForm(ModelForm):
     day = forms.ModelMultipleChoiceField(queryset=Day.objects.all(), widget=forms.CheckboxSelectMultiple, required=True)
     language = forms.ModelChoiceField(queryset=Language.objects.all(), required=True)
 
@@ -32,3 +32,11 @@ class MonthlyPaymentForm(ModelForm):
     class Meta:
         model = MonthlySummary
         fields = ['student_card', 'lesson_count', 'date']
+
+class CreateCardForm(ModelForm):
+    day = forms.ModelMultipleChoiceField(queryset=Day.objects.all(), widget=forms.CheckboxSelectMultiple, required=True)
+    language = forms.CharField(required=True)
+
+    class Meta:
+        model = StudentCard
+        exclude = ('student', 'tutor')

@@ -14,6 +14,8 @@
                         </a>
                         {% endfor %}
                         <br>
+                </ol>
+                    <div style="display: flex; gap: 20px; padding: 10px;">
                         <form method="get" action="{% url 'app:monthly_summary' %}">
                             <button type="submit">Create monthly summary</button>
                         </form>
@@ -21,11 +23,11 @@
                         No students yet. Add your students by clicling the button below.
                         <br>
                         <br>
-                        <form>
-                            <button type="submit">Add a student &#11088;</button>
-                        </form>
                     {% endif %}
-                </ol>
+                    <form method="get" action="{% url 'app:create_student' %}">
+                        <button type="submit">Add a student &#11088;</button>
+                    </form>
+                    </div>
             </div>
         </div>
     </div>
