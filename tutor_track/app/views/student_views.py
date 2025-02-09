@@ -5,14 +5,16 @@ from app.forms import UpdateStudentForm, UpdateStudentCardForm
 
 class StudentList(View):
     def get(self, request):
-        students = Student.objects.all().order_by('first_name')
+        tutor_id = request.user.id
+        students = Student.objects.filter(tutor_id=tutor_id).order_by('first_name')
         context = {"students": students}
         return render(request, "student_list.html", context)
 
 class StudentCardView(View):
     def get(self, request, student_id):
-        student_cards = StudentCard.objects.filter(student_id=student_id)
-        student = Student.objects.get(id=student_id)
+        tutor_id = request.user.id
+        student = Student.objects.get(id=student_id, tutor_id=tutor_id)
+        student_cards = StudentCard.objects.filter(student_id=student_id, tutor_id=tutor_id)
 
         card_data = []
         for card in student_cards:

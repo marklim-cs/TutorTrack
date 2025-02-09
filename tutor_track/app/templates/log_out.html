@@ -8,6 +8,14 @@
                 <li {% if message.tags %} class="{{ message.tags }}" {% endif %} style="color: black;">{{ message }}</li>
             {% endfor %}
         </div>
+        <div style="display: flex; gap: 10px; padding: 10px;">
+            <form method="get" action="{% url 'app:log_in' %}">
+                <button type="submit">Log in</button>
+            </form>
+            <form method="get" action="{% url 'app:sign_up' %}">
+                <button type="submit">Sign up</button>
+            </form>
+        </div>
     </ul>
     {% endif %}
 {% endblock %}

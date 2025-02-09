@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 class Student(models.Model):
     first_name = models.CharField(max_length=250, null=False)
     last_name = models.CharField(max_length=250, null=True)
+    tutor = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -36,6 +37,7 @@ class MonthlySummary(models.Model):
     student_card = models.ForeignKey(StudentCard, on_delete=models.CASCADE)
     lesson_count = models.IntegerField(blank=False)
     date = models.DateField(default=now)
+    tutor = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.student_card}, {self.lesson_count}"

@@ -1,16 +1,25 @@
 {% extends "layout.html" %}
 {% block body %}
 
-    <dev class="container">
-        <dev>
+    <dev class="container-fluid">
+        <dev class="row-cols-auto" style="padding: 10px;">
             <h1>Log in</h1>
-            <form method="post">
-                <div class="form-group" style="padding: 20px;">
-                {% csrf_token %}
-                {{ login_form.as_p }}
-                <button type="submit" class="btn btn-success">Log in</button>
-                </div>
-            </form>
+            <div class="col-md-auto" style="background-color: rgb(147, 255, 244); padding: 10px;">
+                <form method="post">
+                    <div class="form-group" style="padding: 20px;">
+                    {% csrf_token %}
+                    {{ login_form.as_p }}
+                    <button type="submit">Log in</button>
+                    </div>
+                </form>
+            </div>
+            <br>
+            <div class="col-md-auto" style="background-color: rgb(193, 255, 249); padding: 10px;">
+                <p style="padding-left: 20px;"><strong> Sign up if you don't have an account yet.</strong></p>
+                <form method="get" action="{% url 'app:sign_up' %}" style="padding-left: 20px;">
+                    <button type="submit">Sign up</button>
+                </form>
+            </div>
         </dev>
     </dev>
 

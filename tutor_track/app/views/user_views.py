@@ -10,7 +10,7 @@ def index(request):
     else:
         return render(request, "index.html")
 
-def signup(request):
+def sign_up(request):
     if request.method == "POST":
         registration_form = UserRegistration(request.POST)
         if registration_form.is_valid():
@@ -20,7 +20,7 @@ def signup(request):
     else:
         registration_form = UserRegistration()
 
-    return render(request, 'signup.html', {'registration_form': registration_form})
+    return render(request, 'sign_up.html', {'registration_form': registration_form})
 
 def log_in(request):
     if request.method == "POST":

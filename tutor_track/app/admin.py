@@ -3,7 +3,7 @@ from .models import Student, Language, StudentCard, MonthlySummary, Day
 
 # Register your models here.
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ("id", "first_name", "last_name")
+    list_display = ("id", "first_name", "last_name", "tutor")
 
 class LanguageAdmin(admin.ModelAdmin):
     list_display = ("id", "name")
@@ -16,7 +16,7 @@ class StudentCardAdmin(admin.ModelAdmin):
     list_display = ("id", "student", "get_days", "rate", "language", "tutor")
 
 class MonthlySummaryAdmin(admin.ModelAdmin):
-    list_display = ("id", "student_card", "lesson_count", "date")
+    list_display = ("id", "student_card", "lesson_count", "date", "tutor")
 
 class DayAdmin(admin.ModelAdmin):
     list_display = ("id", "name")

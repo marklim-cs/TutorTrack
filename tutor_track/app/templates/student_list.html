@@ -5,17 +5,27 @@
     <div class="container-fluid">
         <h1>Student List</h1>
         <div class="row-cols-auto" style="padding: 10px;">
-            <div class="col-sm-3" style="background-color: lightpink; padding: 10px;">
+            <div class="col-md-auto" style="background-color: rgb(147, 255, 244); padding: 10px;">
                 <ol>
-                    {% for student in students %}
-                    <a href="{% url 'app:student_card' student.id %}">
-                        <li>{{ student }}</li>
-                    </a>
-                    {% endfor %}
+                    {% if students %}
+                        {% for student in students %}
+                        <a href="{% url 'app:student_card' student.id %}">
+                            <li>{{ student }}</li>
+                        </a>
+                        {% endfor %}
+                        <br>
+                        <form method="get" action="{% url 'app:monthly_summary' %}">
+                            <button type="submit">Create monthly summary</button>
+                        </form>
+                    {% else %}
+                        No students yet. Add your students by clicling the button below.
+                        <br>
+                        <br>
+                        <form>
+                            <button type="submit">Add a student &#11088;</button>
+                        </form>
+                    {% endif %}
                 </ol>
-                <form method="get" action="{% url 'app:monthly_summary' %}">
-                    <button type="submit">Create monthly summary</button>
-                </form>
             </div>
         </div>
     </div>
