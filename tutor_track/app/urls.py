@@ -31,5 +31,7 @@ urlpatterns = [
          redirect_to_login(budget_views.DeleteSummary.as_view()),
          name="delete_summary"
          ),
-    path("create_student", redirect_to_login(student_views.CreateStudent.as_view()), name="create_student")
+    path("create_student",
+         redirect_to_login(student_views.CreateStudent.as_view()),
+         name="create_student")
     ]

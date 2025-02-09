@@ -73,7 +73,7 @@ class CreateStudent(View):
             "create_card_form": create_card_form,
         }
 
-        return render(request, "add_student.html", context)
+        return render(request, "create_student.html", context)
 
     def post(self,request):
         pass
