@@ -46,23 +46,23 @@ def log_out(request):
 
 def home(request):
     tutor = request.user
-    students = len(Student.objects.filter(tutor=tutor.id))
-    cards = StudentCard.objects.filter(tutor=tutor.id)
-    cards_data = []
-    total_lessons = 0
     current_month = date.today().month
 
-    for card in cards:
-        lessons = MonthlySummary.objects.filter(student_card_id=card.id, date__month=current_month).aggregate(total_lessons=Sum("lesson_count")) or {'total_lessons': 0}
-        lesson_count = lessons['total_lessons'] if lessons['total_lessons'] else 0
-        total_lessons += lesson_count
-        
-        cards_data.append({"card_id": card.id, "lessons": lesson_count})
+    students = len(Student.objects.filter(tutor=tutor.id))
+    cards = StudentCard.objects.filter(tutor=tutor.id)
+    monthly_summaries = MonthlySummary.objects.filter(student_card__in=cards, date__month=current_month)
+
+    total_lessons = 0
+    income = 0
+
+    for summary in monthly_summaries:
+        total_lessons += summary.lesson_count
+        income += summary.lesson_count * summary.student_card.rate
 
     context = {
         "tutor": tutor,
         "students": students,
-        "cards_data": cards_data,
-        "total_lessons": total_lessons
+        "total_lessons": total_lessons, 
+        "income": income,
     }
     return render(request, 'home.html', context)
