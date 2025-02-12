@@ -1,11 +1,15 @@
 {% extends "layout.html" %}
 {% block body %}
     <div class="container-fluid" style="padding: 10px">
-        <h1>Hi, Tutor!</h1>
+        {% if tutor.username %}
+            <h1>Hi, {{ tutor.username }}!</h1>
+        {% else %}
+            <h1>Hi, Tutor!</h1>
+        {% endif %}
         <div class="row-cols-auto">
             <div class="col-sm-3" style="background-color: turquoise; padding: 20px;">
-                <p><strong>Lesoons planned: </strong></p>
-                <p><strong>Active students: </strong></p>
+                <p><strong>Lessons planned: {{ total_lessons }}</strong></p>
+                <p><strong>Active students: {{ students }}</strong></p>
                 <p><strong>Monthly income: </strong></p>
             </div>
                 <div style="display: flex; gap: 10px; padding: 10px;">

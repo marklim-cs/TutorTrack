@@ -1,8 +1,11 @@
+from datetime import date
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
+from django.db.models import Sum
 from django.contrib import messages
 from app.forms import UserRegistration
+from app.models import Student, StudentCard, MonthlySummary
 
 def index(request):
     if request.user.is_authenticated:
@@ -42,4 +45,24 @@ def log_out(request):
     return render(request, "log_out.html")
 
 def home(request):
-    return render(request, 'home.html')
+    tutor = request.user
+    students = len(Student.objects.filter(tutor=tutor.id))
+    cards = StudentCard.objects.filter(tutor=tutor.id)
+    cards_data = []
+    total_lessons = 0
+    current_month = date.today().month
+
+    for card in cards:
+        lessons = MonthlySummary.objects.filter(student_card_id=card.id, date__month=current_month).aggregate(total_lessons=Sum("lesson_count")) or {'total_lessons': 0}
+        lesson_count = lessons['total_lessons'] if lessons['total_lessons'] else 0
+        total_lessons += lesson_count
+        
+        cards_data.append({"card_id": card.id, "lessons": lesson_count})
+
+    context = {
+        "tutor": tutor,
+        "students": students,
+        "cards_data": cards_data,
+        "total_lessons": total_lessons
+    }
+    return render(request, 'home.html', context)

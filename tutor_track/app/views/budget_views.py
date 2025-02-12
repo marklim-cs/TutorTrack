@@ -1,14 +1,17 @@
+from datetime import date
 from django.views import View
 from django.shortcuts import render, redirect, reverse
 from app.models import MonthlySummary, Student, StudentCard
 from app.forms import MonthlyPaymentForm
-from datetime import date 
+
 
 class MonthlyPaymentSummary(View):
     def get(self, request):
-        monthly_form = MonthlyPaymentForm()
         current_month = date.today().month
-        monthly_summaries = MonthlySummary.objects.filter(date__month=current_month)
+        tutor = request.user.id
+        monthly_form = MonthlyPaymentForm(tutor_id=tutor)
+        cards = StudentCard.objects.filter(tutor=tutor)
+        monthly_summaries = MonthlySummary.objects.filter(date__month=current_month, student_card__in=cards)
 
         student_totals = []
         for summary in monthly_summaries:
@@ -28,11 +31,12 @@ class MonthlyPaymentSummary(View):
         return render(request, "monthly_summary.html", context)
 
     def post(self, request):
-        monthly_form = MonthlyPaymentForm(request.POST)
+        tutor_id = request.user.id
+        monthly_form = MonthlyPaymentForm(tutor_id, request.POST)
         if monthly_form.is_valid():
             monthly_form.save()
 
-            monthly_form = MonthlyPaymentForm()
+            monthly_form = MonthlyPaymentForm(tutor_id)
             context = {
                 "monthly_form": monthly_form
                 }

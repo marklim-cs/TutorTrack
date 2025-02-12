@@ -28,6 +28,11 @@ class UpdateCardForm(ModelForm):
         fields = ['rate', 'day', 'language']
 
 class MonthlyPaymentForm(ModelForm):
+    def __init__(self, tutor_id: int, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        cards = StudentCard.objects.filter(tutor=tutor_id)
+        self.fields['student_card'].queryset = cards
+
     date = forms.DateField(widget=NumberInput(attrs={"type":"date"}))
     class Meta:
         model = MonthlySummary
@@ -35,7 +40,7 @@ class MonthlyPaymentForm(ModelForm):
 
 class CreateCardForm(ModelForm):
     day = forms.ModelMultipleChoiceField(queryset=Day.objects.all(), widget=forms.CheckboxSelectMultiple, required=True)
-    language = forms.CharField(required=True)
+    language = forms.ModelChoiceField(queryset=Language.objects.all(), required=True)
 
     class Meta:
         model = StudentCard

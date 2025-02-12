@@ -4,8 +4,12 @@
     <div class="container-fluid">
         <h1>Add a student</h1>
         <div class="class="col-md-auto" style="background-color: rgb(147, 255, 244); padding: 10px;">
-            {{ create_student_form.as_p }}
-            {{ create_card_form.as_p }}
+            <form method="post" action="{% url 'app:create_student' %}">
+                {% csrf_token %}
+                {{ create_student_form.as_p }}
+                {{ create_card_form.as_p }}
+                <button type="submit">Add</button>
+            </form>
         </div>
     </div>
 

@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.views import View
-from app.models import Student, StudentCard
+from app.models import Student, StudentCard, Language
 from app.forms import UpdateStudentForm, UpdateCardForm, CreateCardForm
 
 class StudentList(View):
@@ -76,4 +76,24 @@ class CreateStudent(View):
         return render(request, "create_student.html", context)
 
     def post(self,request):
-        pass
+        create_student_form = UpdateStudentForm(request.POST)
+        create_card_form = CreateCardForm(request.POST)
+
+        if create_card_form.is_valid() and create_student_form.is_valid():
+            student = create_student_form.save(commit=False)
+            student.tutor = request.user
+            student.save()
+
+            card = create_card_form.save(commit=False)
+            card.student = student
+            card.tutor = student.tutor
+            card.save()
+            create_card_form.save_m2m()
+
+            return redirect(reverse("app:students"))
+        else:
+            context = {
+                "create_student_form": create_student_form, 
+                "create_card_form": create_card_form,
+            }
+            return render(request, "create_student.html", context)

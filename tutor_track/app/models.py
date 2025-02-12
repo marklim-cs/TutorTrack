@@ -34,10 +34,9 @@ class StudentCard(models.Model):
         return f"{self.student}, {self.rate}, {self.day}, {self.language}"
 
 class MonthlySummary(models.Model):
-    student_card = models.ForeignKey(StudentCard, on_delete=models.CASCADE)
+    student_card = models.ForeignKey(StudentCard, on_delete=models.CASCADE, related_name="monthly_summary")
     lesson_count = models.IntegerField(blank=False)
     date = models.DateField(default=now)
-    tutor = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.student_card}, {self.lesson_count}"
