@@ -7,10 +7,10 @@ def redirect_to_login(f):
 
 urlpatterns = [
     path("", user_views.index, name='index'),
-    path('sign_up/', user_views.sign_up, name="sign_up"),
+    path('sign-up/', user_views.sign_up, name="sign_up"),
     path('home/', redirect_to_login(user_views.home), name='home'),
-    path('log_in/', user_views.log_in, name='log_in'),
-    path('log_out/', user_views.log_out, name='log_out'),
+    path('log-in/', user_views.log_in, name='log_in'),
+    path('log-out/', user_views.log_out, name='log_out'),
     path("students/", redirect_to_login(student_views.StudentList.as_view()), name='students'),
     path(
         "students/<int:student_id>/",
@@ -23,15 +23,22 @@ urlpatterns = [
         name='edit_student_card'
         ),
     path(
-        "monthly_summary/",
+        "monthly-summary/",
         redirect_to_login(budget_views.MonthlyPaymentSummary.as_view()),
         name='monthly_summary'
         ),
-    path("delete_summary",
+    path("delete-summary",
          redirect_to_login(budget_views.DeleteSummary.as_view()),
          name="delete_summary"
          ),
-    path("create_student",
+    path("new-student",
          redirect_to_login(student_views.CreateStudent.as_view()),
-         name="create_student")
+         name="new_student"),
+    path("new-card/<int:student_id>",
+         redirect_to_login(student_views.CreateStudentCard.as_view()),
+         name="new_card"
+         ),
+    path("delete-student",
+         redirect_to_login(student_views.DeleteStudent.as_view()),
+         name="delete_student")
     ]

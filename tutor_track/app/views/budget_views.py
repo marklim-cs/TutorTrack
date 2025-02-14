@@ -48,9 +48,6 @@ class MonthlyPaymentSummary(View):
             return render(request, "monthly_summary.html", context)
 
 class DeleteSummary(View):
-    def get(self, request):
-        pass
-
     def post(self, request):
         summary_id = request.POST.get("id")
         summary_to_delete = MonthlySummary.objects.get(id=summary_id)

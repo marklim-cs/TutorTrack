@@ -73,7 +73,7 @@ class CreateStudent(View):
             "create_card_form": create_card_form,
         }
 
-        return render(request, "create_student.html", context)
+        return render(request, "new_student.html", context)
 
     def post(self,request):
         create_student_form = UpdateStudentForm(request.POST)
@@ -96,4 +96,42 @@ class CreateStudent(View):
                 "create_student_form": create_student_form, 
                 "create_card_form": create_card_form,
             }
-            return render(request, "create_student.html", context)
+            return render(request, "new_student.html", context)
+
+class CreateStudentCard(View):
+    def get(self, request, student_id):
+        card_form = UpdateCardForm()
+        student = Student.objects.get(id=student_id)
+
+        context = {
+            "card_form": card_form,
+            "student": student,
+        }
+
+        return render(request, "new_card.html", context)
+
+    def post(self, request, student_id):
+        card_form = UpdateCardForm(request.POST)
+        student = Student.objects.get(id=student_id)
+        tutor = request.user
+
+        if card_form.is_valid():
+            card = card_form.save(commit=False)
+            card.student = student
+            card.tutor = tutor
+            card.save()
+            return redirect(reverse('app:students'))
+
+        else:
+            context = {
+                "card_form": card_form,
+            }
+            return render(request, 'new_student.html', context)
+
+class DeleteStudent(View):
+    def post(self, request):
+        student_id = request.POST.get("id")
+        student_to_delete = Student.objects.get(id=student_id)
+        student_to_delete.delete()
+
+        return redirect("app:students")

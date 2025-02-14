@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block body %}
+{% include "header.html" %}
+
+<div class="container-fluid">
+    <h1>Add a new student card &#11088;</h1>
+        <div class="row-cols-auto">
+            <div class="col-sm-3" style="background-color: turquoise; padding: 20px;">
+                <p><strong>{% if student %} {{ student.first_name}} {{ student.last_name}} {% endif %}</strong></p>
+                <form method="post" action="{% url 'app:new_card' student.id %}">
+                    {% csrf_token %}
+                    {{ card_form.as_p }}
+                    <button type="submit">Add &#11088;</button>
+                </form>
+            </div>
+        </div>
+</div>
+
+{% endblock %}

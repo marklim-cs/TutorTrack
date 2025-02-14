@@ -9,7 +9,7 @@
                  <p><strong>Student:</strong> {{ student.first_name }} {{ student.last_name }}</p>
                 {% for entry in card_data %}
                     <p><strong>Lesson</strong></p>
-                    <ul>
+                    <ul style="padding-bottom: 5px;">
                         <li><strong>Rate: </strong>{{entry.lesson.rate}}</li>
                         <li><strong>Language: </strong> {{entry.lesson.language}}</li>
                         <li><strong>Days: </strong> 
@@ -22,13 +22,23 @@
                             </ul>
                         </li>
                         <li><strong>ID: </strong>{{entry.lesson.id}}</li>
-                        <div style="display: flex; gap: 10px; padding: 20px;">
+                        <div style="display: flex; gap: 10px; padding: 10px;">
                             <form method="get" action="{% url 'app:edit_student_card' student.id entry.lesson.id %}" style="padding: 20px;">
                                 <button type="submit">Edit</button>
                             </form>
                         </div>
                     </ul>
                 {% endfor %}
+                <div style="display: flex; gap: 10px;">
+                    <form method="get" action="{% url 'app:new_card' student.id %}" style="padding: 10px;">
+                        <button type="submit">New card</button>
+                    </form>
+                    <form method="post" action="{% url 'app:delete_student'%}" style="padding: 10px;">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ student.id }}">
+                        <button type="submit">Delete student</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
