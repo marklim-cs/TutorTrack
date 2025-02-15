@@ -7,13 +7,12 @@
         <div class="row-cols-auto" style="padding: 10px;">
             <div class="col-md-auto" style="background-color: rgb(147, 255, 244); padding: 10px;">
                 <ol>
-                    {% if students %}
-                        {% for student in students %}
+                    {% if page_object %}
+                        {% for student in page_object %}
                         <a href="{% url 'app:student_card' student.id %}">
-                            <li>{{ student }}</li>
+                            <li style="padding: 5px;">{{ student }}</li>
                         </a>
                         {% endfor %}
-                        <br>
                 </ol>
                     <div style="display: flex; gap: 20px; padding: 10px;">
                         <form method="get" action="{% url 'app:monthly_summary' %}">
@@ -27,6 +26,23 @@
                     <form method="get" action="{% url 'app:new_student' %}">
                         <button type="submit">Add a student &#11088;</button>
                     </form>
+                    </div>
+                    <div class="pagination">
+                        <span class="step-links">
+                            {% if page_object.has_previous %}
+                                <a href="?page=1">&laquo; first</a>
+                                <a href="?page={{ page_object.previous_page_number }}">previous</a>
+                            {% endif %}
+                    
+                            <span class="current">
+                                Page {{ page_object.number }} of {{ page_object.paginator.num_pages }}.
+                            </span>
+                    
+                            {% if page_object.has_next %}
+                                <a href="?page={{ page_object.next_page_number }}">next</a>
+                                <a href="?page={{ page_object.paginator.num_pages }}">last &raquo;</a>
+                            {% endif %}
+                        </span>
                     </div>
             </div>
         </div>

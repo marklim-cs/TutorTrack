@@ -33,7 +33,7 @@
                                     <td>{{ summary.student }}</td>
                                     <td>{{ summary.rate }}</td>
                                     <td>{{ summary.lesson_count }}</td>
-                                    <td>{{ summary.total }}</td>
+                                    <td>{{ summary.total }} zł</td>
                                     <td>
                                         <form method="post" action="{% url 'app:delete_summary' %}">
                                             {% csrf_token %}
@@ -47,7 +47,16 @@
                             No summaries registered yet.
                         {% endif %}
                     </tbody>
-                </>
+                </table>
+                <table class="table-borderless w-100">
+                    <tbody>
+                        <tr>
+                            <td class="text-lg-start" style="background-color: rgb(134, 253, 241); padding: 10px;">
+                                &#128176; This month you earn: <strong>{{ total_month }} zł</strong>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

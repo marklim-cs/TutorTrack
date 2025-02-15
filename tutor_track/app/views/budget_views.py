@@ -14,8 +14,10 @@ class MonthlyPaymentSummary(View):
         monthly_summaries = MonthlySummary.objects.filter(date__month=current_month, student_card__in=cards)
 
         student_totals = []
+        total_month = 0
         for summary in monthly_summaries:
             total = summary.student_card.rate * summary.lesson_count
+            total_month += total
             student_totals.append({
                 "id": summary.id,
                 "student": summary.student_card.student, 
@@ -27,6 +29,7 @@ class MonthlyPaymentSummary(View):
         context = {
             "monthly_form": monthly_form,
             "student_totals": student_totals,
+            "total_month": total_month,
         }
         return render(request, "monthly_summary.html", context)
 

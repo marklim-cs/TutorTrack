@@ -1,13 +1,22 @@
 from django.shortcuts import render, redirect, get_object_or_404, reverse
+from django.core.paginator import Paginator
 from django.views import View
-from app.models import Student, StudentCard, Language
+from app.models import Student, StudentCard
 from app.forms import UpdateStudentForm, UpdateCardForm, CreateCardForm
 
 class StudentList(View):
     def get(self, request):
         tutor_id = request.user.id
         students = Student.objects.filter(tutor_id=tutor_id).order_by('first_name')
-        context = {"students": students}
+
+        paginator = Paginator(students, 25, allow_empty_first_page=True)
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
+
+        context = {
+            "page_object": page_obj,
+            "students": students
+            }
         return render(request, "student_list.html", context)
 
 class StudentCardView(View):
