@@ -27,8 +27,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% if student_totals %}
-                            {% for summary in student_totals %}
+                        {% if monthly_summaries.summary_per_student %}
+                            {% for summary in monthly_summaries.summary_per_student %}
                                 <tr>
                                     <td>{{ summary.student }}</td>
                                     <td>{{ summary.rate }}</td>
@@ -52,7 +52,7 @@
                     <tbody>
                         <tr>
                             <td class="text-lg-start" style="background-color: rgb(134, 253, 241); padding: 10px;">
-                                &#128176; This month you earn: <strong>{{ total_month }} zł</strong>
+                                &#128176; This month you earned: <strong>{{ monthly_summaries.monthly_income }} zł</strong>
                             </td>
                         </tr>
                     </tbody>

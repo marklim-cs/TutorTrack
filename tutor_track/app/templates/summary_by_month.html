@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block body %}
+{% include "header.html" %}
+    <div class="container">
+        <h1>Summary by Month</h1>
+        <div class="row-cols-auto">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Month</th>
+                            <th>Number of lessons</th>
+                            <th>Income</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if summaries_by_month %}
+                            {% for summary in summaries_by_month %}
+                                <tr>
+                                    <td>{{ summary.month}}</td>
+                                    <td>{{ summary.lesson_count }}</td>
+                                    <td>{{ summary.monthly_income }} </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            No summaries registered yet.
+                        {% endif %}
+                    </tbody>
+                </table>
+                <table class="table-borderless w-100">
+                    <tbody>
+                        <tr>
+                            <td class="text-lg-start" style="background-color: rgb(134, 253, 241); padding: 10px;">
+                                &#128176; This year you earned: <strong>{{ yearly_income }} zł</strong>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

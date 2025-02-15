@@ -24,7 +24,7 @@ urlpatterns = [
         ),
     path(
         "monthly-summary/",
-        redirect_to_login(budget_views.MonthlyPaymentSummary.as_view()),
+        redirect_to_login(budget_views.CreateMonthlyPayment.as_view()),
         name='monthly_summary'
         ),
     path("delete-summary",
@@ -40,5 +40,8 @@ urlpatterns = [
          ),
     path("delete-student",
          redirect_to_login(student_views.DeleteStudent.as_view()),
-         name="delete_student")
+         name="delete_student"),
+    path("summary-by-month",
+         redirect_to_login(budget_views.SummaryByMonth.as_view()),
+         name="summary_by_month")
     ]
