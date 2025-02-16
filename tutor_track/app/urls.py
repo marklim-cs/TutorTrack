@@ -23,9 +23,9 @@ urlpatterns = [
         name='edit_student_card'
         ),
     path(
-        "monthly-summary/",
+        "payments/",
         redirect_to_login(budget_views.CreateMonthlyPayment.as_view()),
-        name='monthly_summary'
+        name='monthly_payment'
         ),
     path("delete-summary",
          redirect_to_login(budget_views.DeleteSummary.as_view()),
@@ -41,7 +41,10 @@ urlpatterns = [
     path("delete-student",
          redirect_to_login(student_views.DeleteStudent.as_view()),
          name="delete_student"),
-    path("summary-by-month",
-         redirect_to_login(budget_views.SummaryByMonth.as_view()),
-         name="summary_by_month")
+    path("summary/<int:year>",
+         redirect_to_login(budget_views.YearSummary.as_view()),
+         name="year_summary"),
+    path("summary/<int:year>/<str:month>",
+         redirect_to_login(budget_views.MonthSummary.as_view()),
+         name="month_summary"),
     ]

@@ -18,7 +18,7 @@ def detailed_monthly_summary(tutor_id, year, month):
         monthly_income += total
         summary_per_student.append(
             {
-                "summary_id": summary.id,
+                "id": summary.id,
                 "student": summary.student_card.student,
                 "rate": summary.student_card.rate,
                 "lesson_count": summary.lesson_count,
@@ -45,7 +45,7 @@ class CreateMonthlyPayment(View):
             "monthly_form": monthly_form,
             "monthly_summaries": monthly_summaries
         }
-        return render(request, "monthly_summary.html", context)
+        return render(request, "monthly_payment.html", context)
 
     def post(self, request):
         tutor_id = request.user.id
@@ -57,12 +57,12 @@ class CreateMonthlyPayment(View):
             context = {
                 "monthly_form": monthly_form
                 }
-            return redirect(reverse("app:monthly_summary"))
+            return redirect(reverse("app:monthly_payment"))
         else:
             context = {
                 "monthly_form": monthly_form
             }
-            return render(request, "monthly_summary.html", context)
+            return render(request, "monthly_payment.html", context)
 
 class DeleteSummary(View):
     def post(self, request):
@@ -70,11 +70,10 @@ class DeleteSummary(View):
         summary_to_delete = MonthlySummary.objects.get(id=summary_id)
         summary_to_delete.delete()
 
-        return redirect(reverse("app:monthly_summary"))
+        return redirect(reverse("app:monthly_payment"))
 
-class SummaryByMonth(View):
-    def get(self, request): #remember year
-        year = 2025
+class YearSummary(View):
+    def get(self, request, year):
         tutor_id = request.user.id
         cards = StudentCard.objects.filter(tutor=tutor_id)
         current_year = date.today().year
@@ -87,34 +86,55 @@ class SummaryByMonth(View):
             for month in range(1, current_month + 1):
                 summaries = MonthlySummary.objects.filter(student_card__in=cards, date__year=year, date__month=month)
                 lesson_count = summaries.aggregate(Sum("lesson_count", default=0))
+
                 for summary in summaries:
                     monthly_income += summary.student_card.rate * summary.lesson_count
-                    yearly_income += monthly_income
-                    summaries_by_month.append(
-                        {
-                            "month": calendar.month_name[month],
-                            "lesson_count": lesson_count,
-                            "monthly_income": monthly_income,
-                        }
-                    )
+
+                yearly_income += monthly_income
+                summaries_by_month.append(
+                    {
+                        "month": calendar.month_name[month],
+                        "lesson_count": lesson_count["lesson_count__sum"],
+                        "monthly_income": monthly_income,
+                    }
+                )
+                monthly_income = 0
         else:
             for month in range(1, 12 + 1):
                 summaries = MonthlySummary.objects.filter(student_card__in=cards, date__year=year, date__month=month)
                 lesson_count = summaries.aggregate(Sum("lesson_count", default=0))
+
                 for summary in summaries:
-                    monthly_income += summary.student_card.rate * summary.rate
-                    yearly_income += monthly_income
-                    summaries_by_month.append(
-                        {
-                            "month": calendar.month_name[month],
-                            "lesson_count": lesson_count,
-                            "monthly_income": monthly_income,
-                        }
-                    )
+                    monthly_income += summary.student_card.rate * summary.lesson_count
+
+                yearly_income += monthly_income
+                summaries_by_month.append(
+                    {
+                        "month": calendar.month_name[month],
+                        "lesson_count": lesson_count["lesson_count__sum"],
+                        "monthly_income": monthly_income,
+                    }
+                )
+                monthly_income = 0
 
         context = {
             "summaries_by_month": summaries_by_month,
             "yearly_income": yearly_income,
+            "year": year,
         }
 
-        return render(request, "summary_by_month.html", context)
+        return render(request, "year_summary.html", context)
+
+class MonthSummary(View):
+    def get(self, request, year, month):
+        tutor_id = request.user.id
+        month_int = list(calendar.month_name).index(month)
+        month_summary = detailed_monthly_summary(tutor_id, year, month_int)
+
+        context = {
+            "month_summary": month_summary,
+            "month": month,
+            "year": year,
+        }
+
+        return render(request, "month_summary.html", context)

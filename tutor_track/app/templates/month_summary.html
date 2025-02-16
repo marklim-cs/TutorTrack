@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block body %}
+{% include "header.html" %}
+
+<div class="container">
+    <h1>&#128197; {{ month }} {{ year }}</h1>
+    <div class="row-cols-auto">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Rate</th>
+                        <th>Lesson Count</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if month_summary.summary_per_student %}
+                        {% for summary in month_summary.summary_per_student %}
+                            <tr>
+                                <td>{{ summary.student }}</td>
+                                <td>{{ summary.rate }}</td>
+                                <td>{{ summary.lesson_count }}</td>
+                                <td>{{ summary.total }} </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        No summaries registered.
+                    {% endif %}
+                </tbody>
+            </table>
+            <table class="table-borderless w-100">
+                <tbody>
+                    <tr>
+                        <td class="text-lg-start" style="background-color: rgb(134, 253, 241); padding: 10px;">
+                            &#128176; In {{ month }} you earned: <strong>{{ month_summary.monthly_income }} </strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

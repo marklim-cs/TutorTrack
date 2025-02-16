@@ -47,6 +47,10 @@ def log_out(request):
 def home(request):
     tutor = request.user
     current_month = date.today().month
+    current_year = date.today().year
+    years_range = range(current_year-3, current_year+1)
+    years = list(years_range)
+    print(years)
 
     students = len(Student.objects.filter(tutor=tutor.id))
     cards = StudentCard.objects.filter(tutor=tutor.id)
@@ -64,5 +68,6 @@ def home(request):
         "students": students,
         "total_lessons": total_lessons, 
         "income": income,
+        "years": years,
     }
     return render(request, 'home.html', context)

@@ -7,10 +7,10 @@
             <h1>Hi, Tutor!</h1>
         {% endif %}
         <div class="row-cols-auto">
-            <div class="col-sm-3" style="background-color: turquoise; padding: 20px;">
+            <div class="col-sm-3" style="background-color: rgb(64, 224, 208); padding: 20px;">
                 <p><strong>Lessons planned: {{ total_lessons }}</strong></p>
                 <p><strong>Active students: {{ students }}</strong></p>
-                <p><strong>Monthly income: {{ income }} zł</strong></p>
+                <p><strong>Monthly income: {{ income }} </strong></p>
             </div>
                 <div style="display: flex; gap: 10px; padding: 10px;">
                     <form method="get" action="{% url 'app:log_out' %}">
@@ -20,10 +20,14 @@
                     <form method="get" action="{% url 'app:students' %}" style="padding-left: 20px;">
                         <button type="submit">Students</button>
                     </form>
-
-                    <form method="get" action="{% url 'app:summary_by_month' %}" style="padding-left: 20px;">
-                        <button type="submit">Monthly Summary</button>
-                    </form>
+                    <div class="dropdown" style="padding-left: 20px;">
+                        <button class="dropbtn">Summaries</button>
+                        <div class="dropdown-content">
+                            {% for year in years%}
+                            <a href="{% url 'app:year_summary' year %}">{{year}}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
         </div>
     </div>

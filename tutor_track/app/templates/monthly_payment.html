@@ -3,10 +3,10 @@
 {% block body %}
 {% include "header.html" %}
     <div class="container">
-        <h1>Monthly Payments</h1>
+        <h1>&#128197; Monthly Payments</h1>
         <div class="col-auto" style="background-color: rgb(134, 253, 241); padding: 20px;">
             <div class="row-cols-auto">
-                <form method="post" action="{% url 'app:monthly_summary' %}">
+                <form method="post" action="{% url 'app:monthly_payment' %}">
                     {% csrf_token %}
                     {{ monthly_form.as_p }}
                     <button type="submit">Save</button>
@@ -33,7 +33,7 @@
                                     <td>{{ summary.student }}</td>
                                     <td>{{ summary.rate }}</td>
                                     <td>{{ summary.lesson_count }}</td>
-                                    <td>{{ summary.total }} zł</td>
+                                    <td>{{ summary.total }} </td>
                                     <td>
                                         <form method="post" action="{% url 'app:delete_summary' %}">
                                             {% csrf_token %}

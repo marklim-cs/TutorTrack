@@ -15,8 +15,8 @@
                         {% endfor %}
                 </ol>
                     <div style="display: flex; gap: 20px; padding: 10px;">
-                        <form method="get" action="{% url 'app:monthly_summary' %}">
-                            <button type="submit">Create monthly summary</button>
+                        <form method="get" action="{% url 'app:monthly_payment' %}">
+                            <button type="submit">Create monthly payment</button>
                         </form>
                     {% else %}
                         No students yet. Add your students by clicling the button below.
