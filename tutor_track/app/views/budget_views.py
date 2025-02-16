@@ -1,36 +1,10 @@
 from datetime import date
-from django.views import View
 import calendar
+from django.views import View
 from django.db.models import Sum
 from django.shortcuts import render, redirect, reverse
-from app.models import MonthlySummary, Student, StudentCard
+from app.models import MonthlySummary, StudentCard
 from app.forms import MonthlyPaymentForm
-
-def detailed_monthly_summary(tutor_id, year, month):
-    cards = StudentCard.objects.filter(tutor=tutor_id)
-    monthly_summary = MonthlySummary.objects.filter(student_card__in=cards, date__year=year, date__month=month)
-
-    summary_per_student = []
-    monthly_income = 0
-
-    for summary in monthly_summary:
-        total = summary.student_card.rate * summary.lesson_count
-        monthly_income += total
-        summary_per_student.append(
-            {
-                "id": summary.id,
-                "student": summary.student_card.student,
-                "rate": summary.student_card.rate,
-                "lesson_count": summary.lesson_count,
-                "total": total
-            }
-        )
-
-    context = {
-        "summary_per_student": summary_per_student,
-        "monthly_income": monthly_income,
-    }
-    return context
 
 class CreateMonthlyPayment(View):
     def get(self, request):
@@ -39,7 +13,11 @@ class CreateMonthlyPayment(View):
         tutor_id = request.user.id
 
         monthly_form = MonthlyPaymentForm(tutor_id)
-        monthly_summaries = detailed_monthly_summary(tutor_id, current_year, current_month)
+        monthly_summaries = MonthlySummary.objects.detailed_monthly_summary(
+            tutor_id,
+            current_year,
+            current_month
+            )
 
         context = {
             "monthly_form": monthly_form,
@@ -84,7 +62,11 @@ class YearSummary(View):
         yearly_income = 0
         if year == current_year:
             for month in range(1, current_month + 1):
-                summaries = MonthlySummary.objects.filter(student_card__in=cards, date__year=year, date__month=month)
+                summaries = MonthlySummary.objects.filter(
+                    student_card__in=cards,
+                    date__year=year,
+                    date__month=month
+                    )
                 lesson_count = summaries.aggregate(Sum("lesson_count", default=0))
 
                 for summary in summaries:
@@ -129,7 +111,7 @@ class MonthSummary(View):
     def get(self, request, year, month):
         tutor_id = request.user.id
         month_int = list(calendar.month_name).index(month)
-        month_summary = detailed_monthly_summary(tutor_id, year, month_int)
+        month_summary = MonthlySummary.objects.detailed_monthly_summary(tutor_id, year, month_int)
 
         context = {
             "month_summary": month_summary,

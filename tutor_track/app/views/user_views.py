@@ -50,11 +50,10 @@ def home(request):
     current_year = date.today().year
     years_range = range(current_year-3, current_year+1)
     years = list(years_range)
-    print(years)
 
     students = len(Student.objects.filter(tutor=tutor.id))
     cards = StudentCard.objects.filter(tutor=tutor.id)
-    monthly_summaries = MonthlySummary.objects.filter(student_card__in=cards, date__month=current_month)
+    monthly_summaries = MonthlySummary.objects.filter(student_card__in=cards, date__month=current_month, date__year=current_year)
 
     total_lessons = 0
     income = 0
