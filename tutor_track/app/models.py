@@ -4,6 +4,12 @@ from django.db import models
 from django.utils.timezone import now
 from django.contrib.auth.models import User
 
+
+class StudentCardManager(models.Manager):
+    def cards_by_id(self, tutor_id):
+        cards = StudentCard.objects.filter(tutor=tutor_id)
+        return cards
+
 @dataclass
 class StudentSummary():
     id: int
@@ -19,7 +25,7 @@ class MonthlySummaryData():
 
 class MonthlySummaryManager(models.Manager):
     def detailed_monthly_summary(self, tutor_id, year, month) -> MonthlySummaryData:
-        cards = StudentCard.objects.filter(tutor=tutor_id)
+        cards = StudentCard.objects.cards_by_id(tutor_id)
         monthly_summary = MonthlySummary.objects.filter(student_card__in=cards, date__year=year, date__month=month)
 
         summary_per_student = []
@@ -49,6 +55,8 @@ class Student(models.Model):
     last_name = models.CharField(max_length=250, null=True)
     tutor = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    objects = models.Manager()
+
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
@@ -70,6 +78,9 @@ class StudentCard(models.Model):
     day = models.ManyToManyField(Day)
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
     tutor = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    objects = StudentCardManager()
+
     def __str__(self):
         return f"{self.student}, {self.rate}, {self.day}, {self.language}"
 

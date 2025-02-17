@@ -53,7 +53,7 @@ class DeleteSummary(View):
 class YearSummary(View):
     def get(self, request, year):
         tutor_id = request.user.id
-        cards = StudentCard.objects.filter(tutor=tutor_id)
+        cards = StudentCard.objects.cards_by_id(tutor_id)
         current_year = date.today().year
         current_month = date.today().month
 

@@ -2,7 +2,6 @@ from datetime import date
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
-from django.db.models import Sum
 from django.contrib import messages
 from app.forms import UserRegistration
 from app.models import Student, StudentCard, MonthlySummary
